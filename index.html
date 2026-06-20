@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konkurence — půjčovna bednění & monolitické stropy (ČR)</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --line:#2a2f3a;
+    --txt:#e8eaed; --muted:#9aa3b2; --accent:#f5a623; --accent2:#4aa3ff;
+    --green:#37c172; --red:#ff6b6b; --chip:#262b35;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
+  header{padding:28px 22px 18px;background:linear-gradient(160deg,#1a1e27,#0f1115);border-bottom:1px solid var(--line)}
+  h1{margin:0 0 6px;font-size:24px}
+  header p{margin:0;color:var(--muted);font-size:14px;max-width:880px}
+  .wrap{padding:18px 22px 60px;max-width:1300px;margin:0 auto}
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;min-width:140px}
+  .stat b{display:block;font-size:22px}
+  .stat span{color:var(--muted);font-size:12px}
+  h2{font-size:18px;margin:30px 0 12px;border-left:3px solid var(--accent);padding-left:10px}
+  .bench{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .bcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .bcard h3{margin:0 0 8px;font-size:14px;color:var(--accent)}
+  .bcard .big{font-size:20px;font-weight:700}
+  .bcard small{color:var(--muted);display:block;margin-top:4px;font-size:12px}
+  .controls{position:sticky;top:0;z-index:5;background:rgba(15,17,21,.95);backdrop-filter:blur(6px);padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:16px}
+  .controls .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  input[type=text],select{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+  input[type=text]{flex:1;min-width:200px}
+  .filterchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .fchip{background:var(--chip);border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;user-select:none}
+  .fchip.active{background:var(--accent);color:#1a1a1a;border-color:var(--accent);font-weight:600}
+  .fchip.svc.active{background:var(--accent2);color:#08233f;border-color:var(--accent2)}
+  .count{color:var(--muted);font-size:13px;margin:6px 0 14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;position:relative}
+  .card.north{border-color:#5a4413;box-shadow:0 0 0 1px #5a441355}
+  .card h3{margin:0;font-size:16px;padding-right:60px}
+  .badge{position:absolute;top:14px;right:14px;font-size:10px;padding:3px 8px;border-radius:20px;background:#3a2f10;color:var(--accent);border:1px solid #5a4413;font-weight:600}
+  .region{font-size:12px;color:var(--muted)}
+  .tags{display:flex;flex-wrap:wrap;gap:5px;margin:2px 0}
+  .tag{font-size:11px;padding:2px 8px;border-radius:6px;background:var(--chip);color:var(--muted)}
+  .tag.svc{background:#13314f;color:#9cc8ff}
+  .tag.sys{background:#143524;color:#86e0ad}
+  .field{font-size:13px}
+  .field b{color:var(--muted);font-weight:500}
+  .price{font-size:13px;color:var(--green)}
+  .note{font-size:12px;color:var(--muted);font-style:italic;border-top:1px solid var(--line);padding-top:8px;margin-top:2px}
+  .card a{color:var(--accent2);text-decoration:none;font-size:12px}
+  .card a:hover{text-decoration:underline}
+  .legend{color:var(--muted);font-size:12px;margin:8px 0 0}
+  footer{color:var(--muted);font-size:12px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}
+  mark{background:var(--accent);color:#1a1a1a;border-radius:3px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Konkurence: půjčovna bednění &amp; realizace monolitických stropů — ČR</h1>
+  <p>Celorepublikový přehled firem prozkoumaných přes jejich weby. Zaměřeno na potenciální konkurenci nové firmy (půjčovna monolitického stropního bednění + realizace stropů) se sídlem na <b>severu Čech / v Ústeckém kraji</b>. Filtruj podle kraje, typu služby a systému bednění. Data: červen 2026.</p>
+</header>
+<div class="wrap">
+
+  <div class="stats" id="stats"></div>
+
+  <h2>Cenové benchmarky</h2>
+  <div class="bench">
+    <div class="bcard"><h3>Půjčovné stropního bednění</h3><div class="big">12–18 Kč/m²/den</div><small>Typická sazba u regionálních půjčoven. DEK až 24–29 Kč/m²/den (bez kauce) = horní hranice.</small></div>
+    <div class="bcard"><h3>Realizace stropu „na klíč"</h3><div class="big">2 000–3 500 Kč/m²</div><small>Kompletní (bednění+výztuž+beton+práce). Složitější 3 500–5 500 Kč/m². Svépomocí ~730–1 000 Kč/m².</small></div>
+    <div class="bcard"><h3>Pořízení nové sady bednění</h3><div class="big">1 350–1 950 Kč/m²</div><small>Sada na 100 m² = cca 134–192 tis. Kč bez DPH. Návratnost při pronájmu ~1–2 sezóny.</small></div>
+    <div class="bcard"><h3>Rozpad realizace (práce)</h3><div class="big">336 + 560 Kč/m²</div><small>Betonáž 336 Kč/m² + zřízení bednění 560 Kč/m² (s DPH). Beton od ~3 388 Kč/m³. Výztuž ~50 tis. Kč/t.</small></div>
+  </div>
+
+  <h2>Firmy</h2>
+  <div class="controls">
+    <div class="row">
+      <input type="text" id="search" placeholder="Hledat firmu, město, systém…">
+      <select id="region"></select>
+      <select id="sort">
+        <option value="north">Řadit: sever Čech první</option>
+        <option value="name">Řadit: název A–Z</option>
+        <option value="price">Řadit: s veřejnou cenou první</option>
+      </select>
+    </div>
+    <div class="filterchips" id="svcChips">
+      <span class="fchip svc" data-svc="pronájem">Půjčovna</span>
+      <span class="fchip svc" data-svc="realizace">Realizace monolitů</span>
+      <span class="fchip svc" data-svc="prodej">Prodej</span>
+      <span class="fchip svc" data-svc="cena">Má veřejný ceník</span>
+    </div>
+    <div class="filterchips" id="sysChips"></div>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <p>Rešerše sestavena z webových stránek firem, katalogů (Firmy.cz, Živéfirmy) a cenových portálů (Daibau, Epicentrum Home, Serwisbudowy). Ceny jsou orientační k červnu 2026; u firem bez veřejného ceníku se kalkuluje individuálně z projektu. ⭐ = klíčový hráč. Žlutý rámeček = sídlo/působnost na severu Čech.</p>
+    <p><b>Hlavní závěr:</b> Žádný velký systémový hráč (Doka, PERI, ULMA, Paschal, MEVA, NOE, Hünnebeck) nemá v Ústeckém kraji vlastní depo. Lokální konkurence je řídká a netransparentní — jen FORMWORKCZ (Lenešice/Louny) zveřejňuje ceník stropního bednění. To je tržní mezera pro novou firmu.</p>
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  // ---- SEVER ČECH (Ústecký + Liberecký) ----
+  {n:"FORMWORKCZ s.r.o.",star:"⭐⭐",web:"https://www.formworkcz.eu",region:"Ústecký",city:"Lenešice u Loun",cat:"Půjčovna + realizace",svc:["pronájem","prodej","realizace","cena"],sys:["PERI","Doka","ULMA","Paschal"],price:"Stropní desky: nové 6 / použité 3,50 Kč/m²/den; stojky 2,50–5 Kč/ks/den; doprava do 50 km zdarma",contact:"702 213 811 · formworkcz@gmail.com",note:"Nejpřímější konkurent v regionu. Jediná firma v kat. „pronájem bednění” pro Ústecký kraj na Firmy.cz. Veřejný detailní ceník."},
+  {n:"ELPA (Vše pro dům)",star:"⭐",web:"https://www.elpa.cz",region:"Ústecký",city:"Ústí nad Labem",cat:"Půjčovna + armovna",svc:["pronájem","prodej"],sys:["komponentové"],price:"Ceník pronájmu na webu (sazby neuvedeny)",contact:"604 854 985 · info@elpa.cz",note:"Hlavně lešení; přidaná hodnota = vlastní armovna + autodoprava do 8,8 t. Silný regionální hráč."},
+  {n:"Stavirezek s.r.o.",star:"⭐⭐",web:"https://www.stavirezek.cz",region:"Ústecký",city:"sklad HK, staví v Děčíně/Chomutově",cat:"Realizace + půjčovna",svc:["pronájem","prodej","realizace"],sys:["Doka"],price:"Bednění od 18 Kč/den; jeřáby od 1 500 Kč/den; plošiny od 390 Kč/den",contact:"604 755 961 · info@stavirezek.cz",note:"Velké severočeské reference: Nemocnice Děčín (21 200 m² bednění), Nemocnice Chomutov (16 500 m²). Vlastní park Doka."},
+  {n:"CON-WALL s.r.o.",star:"⭐",web:"https://www.con-wall.cz",region:"Liberecký",city:"Šimonovice u Liberce",cat:"Realizace monolitů",svc:["realizace"],sys:["Doka","vlastní"],price:"nezjištěno",contact:"739 055 121 · info@con-wall.cz",note:"Nejsilnější čistě lokální realizátor u Liberce. ~1 200 m³ betonu/rok, 600 m² stropního bednění. Bednění nepronajímá."},
+  {n:"VALME s.r.o.",star:"",web:"https://valme.cz",region:"Liberecký",city:"Chrastava u Liberce",cat:"Armovna + monolity",svc:["realizace","prodej"],sys:["vlastní"],price:"nezjištěno",contact:"482 317 356 · valme@valme.cz",note:"Armovna + kompletní ŽB monolity od 2000. Reference: Rezidence ROSA Liberec, OC Central Jablonec."},
+  {n:"STAJAK s.r.o.",star:"",web:"https://www.stajak.cz",region:"Ústecký",city:"Ústí nad Labem",cat:"Stavební firma + monolity",svc:["realizace"],sys:["systémové"],price:"nezjištěno",contact:"727 841 811 · info@stajak.cz",note:"Monolitická divize + RD na klíč, rekonstrukce. Monolity jedna z více činností."},
+  {n:"REVOR GROUP s.r.o.",star:"",web:"https://www.revorgroup.cz",region:"Ústecký",city:"Most",cat:"Stavební + zámečnická firma",svc:["realizace"],sys:[],price:"nezjištěno",contact:"721 840 814 · kancelar@revorgroup.cz",note:"Monolitické ŽB konstrukce, průmyslové podlahy, sanace betonu. Monolity jako jedna z činností."},
+  {n:"1ku1 s.r.o.",star:"",web:"https://www.1ku1.cz",region:"Liberecký",city:"Liberec-Rochlice",cat:"Stavby na klíč + pronájem",svc:["pronájem","realizace"],sys:[],price:"nezjištěno",contact:"hodnocení 4,9 (Firmy.cz)",note:"Jediná firma v kat. „pronájem bednění” pro Liberecký kraj na Firmy.cz. Betonové stropy + pronájem stropního bednění."},
+  {n:"Půjčovna lešení, bednění",star:"",web:"https://www.pujcovna-leseni-bedneni.cz",region:"Liberecký",city:"Liberec + Ústí, Děčín, Č. Lípa",cat:"Půjčovna lešení/bednění",svc:["pronájem"],sys:["komponentové"],price:"E-shop s denními sazbami (stropní bednění nezjištěno)",contact:"734 857 803",note:"Pokrývá celý sever Čech sítí poboček."},
+  {n:"AZL půjčovna (AZ Lešení)",star:"",web:"https://www.azlpujcovna.cz",region:"Liberecký",city:"Cvikov",cat:"Půjčovna bednění",svc:["pronájem"],sys:["PERI"],price:"na poptávku",contact:"724 209 529",note:"Stropní bednění PERI, stěnové DUO. Součást skupiny AZ Lešení."},
+  {n:"STAVMAX-Bezděk",star:"",web:"https://www.stavmaxgroup.cz",region:"Ústecký",city:"Klášterec nad Ohří",cat:"Půjčovna + prodej + práce",svc:["pronájem","prodej","realizace"],sys:["PERI"],price:"kalkulace zdarma",contact:"734 370 013",note:"Bednění jako doplněk k lešení + stavební práce."},
+  {n:"K-STAV s.r.o. (Hünnebeck distrib.)",star:"",web:"https://huennebeck.com/cz",region:"Ústecký",city:"Teplice",cat:"Distributor systému",svc:["pronájem"],sys:["Hünnebeck"],price:"nezjištěno",contact:"přes Hünnebeck CZ: 737 715 140",note:"Distributor značky Hünnebeck (primárně lešení) v Teplicích. Hünnebeck nemá v ČR vlastní sklad."},
+
+  // ---- SYSTÉMOVÍ GIGANTI (celá ČR) ----
+  {n:"Česká Doka bednicí technika",star:"⭐",web:"https://www.doka.com/cz",region:"Celá ČR",city:"Praha, Brno, Ostrava",cat:"Systémový pronajímatel",svc:["pronájem","prodej"],sys:["Doka"],price:"jen na poptávku (e-shop shop.doka.com)",contact:"284 001 311 · ceska@doka.com · zástupce sever: L. Tintěra 724 918 057",note:"Světový lídr. Velké monolity, mosty, tunely. Slabina pro region: nejbližší depo Praha, žádné na severu Čech."},
+  {n:"PERI, spol. s r.o.",star:"⭐",web:"https://www.peri.cz",region:"Celá ČR",city:"Jesenice u Prahy, sklad Prostějov",cat:"Systémový pronajímatel",svc:["pronájem","prodej"],sys:["PERI"],price:"jen na poptávku",contact:"604 949 150 · info@peri.cz",note:"Největší světový dodavatel bednění + lešení. MULTIFLEX, SKYDECK. Jen 2 sklady, žádný na severu."},
+  {n:"ULMA Construcción CZ",star:"",web:"https://www.ulmaconstruction.cz",region:"Celá ČR",city:"Benátky nad Jizerou, Brno",cat:"Systémový výrobce + pronájem",svc:["pronájem","prodej","realizace"],sys:["ULMA"],price:"nezjištěno",contact:"775 576 503 · info@ulmaconstruction.cz",note:"Náročné stavby (dálnice, mosty). Reference STRABAG, PORR, HOCHTIEF. Žádné depo v Ústeckém kraji."},
+  {n:"PASCHAL s.r.o.",star:"",web:"https://www.paschal.cz",region:"Celá ČR",city:"Praha, sklad Beroun, Olomouc",cat:"Systémový dodavatel",svc:["pronájem","prodej"],sys:["Paschal"],price:"nezjištěno",contact:"přes web · jednatel Ing. Šíma",note:"Středně velký, dobře etablovaný (1000+ zakázek od 1995). Vlastní projekční SW. Sever obsluhuje z Berouna."},
+  {n:"Hünnebeck (BrandSafway)",star:"",web:"https://huennebeck.com/cz",region:"Celá ČR",city:"řízeno z Polska, distrib. Teplice",cat:"Systémový pronajímatel",svc:["pronájem"],sys:["Hünnebeck"],price:"nezjištěno",contact:"737 715 140 · kontakt_cz@huennebeck.com",note:"TOPMAX, TOPEC, TOPFLEX. Velký mezinárodní hráč, ale slabá fyzická přítomnost v ČR — bez vlastního skladu."},
+  {n:"ISD - NOE, s.r.o.",star:"",web:"https://isd-noe.webnode.cz",region:"Celá ČR",city:"Brno",cat:"Výhradní zástupce NOE",svc:["pronájem","prodej"],sys:["NOE"],price:"nezjištěno",contact:"545 563 200 · info@isd-noe.cz",note:"Specialita NOEplast (pohledový strukturovaný beton). Silný na Moravě. Web zastaralý."},
+  {n:"MEVA Bednicí Systémy s.r.o.",star:"",web:"https://www.meva-bs.cz",region:"Celá ČR",city:"Praha 8 – Dolní Chabry",cat:"Výhradní zástupce MEVA",svc:["pronájem","prodej","realizace"],sys:["MEVA"],price:"nezjištěno",contact:"283 085 327 · info@meva-bs.cz",note:"Malý butikový dodavatel (5 zaměstnanců). Prémiový německý systém MevaDec."},
+
+  // ---- CELOSTÁTNÍ / VÝROBCI PŮJČOVEN ----
+  {n:"SCASERV a.s.",star:"⭐",web:"https://www.scaserv.cz",region:"Celá ČR",city:"Praha, Brno, Ostrava, Olomouc, Pardubice, HK",cat:"Výrobce + půjčovna",svc:["pronájem","prodej","cena"],sys:["vlastní"],price:"Stojky 5,60–14,97 Kč/ks/den vč. DPH; nosník H20 1,62–8,71 Kč/den (transparentní ceník)",contact:"737 218 478 · info@scaserv.cz",note:"Vlastní systém SCAFLEX/LOGIK. Celostátní síť distributorů (i Liberec). Nejtransparentnější ceník. SW SCASERVAPP."},
+  {n:"RGSB, s.r.o. (RINGER)",star:"",web:"https://www.rgsb.cz",region:"Celá ČR",city:"Brno",cat:"Zástupce RINGER",svc:["pronájem","prodej"],sys:["RINGER"],price:"ceník lešení online; bednění na poptávku",contact:"541 218 374 · info@rgsb.cz",note:"RINGER v ČR žije jen přes RGSB. Technicky orientovaný, větší monolity."},
+  {n:"BEDNĚNÍ – ARTCO s.r.o.",star:"",web:"https://www.bedneni-artco.cz",region:"Celá ČR",city:"ČR",cat:"Multiznačkový pronájem + repase",svc:["pronájem"],sys:["PERI","Doka","Paschal"],price:"nezjištěno",contact:"přes web",note:"Stropní/stěnové/sloupové bednění více značek (i PERI/Doka z druhé ruky) + opravy a repase."},
+  {n:"PRO-DOMA stavebniny",star:"",web:"https://www.pro-doma.cz",region:"Celá ČR",city:"síť poboček vč. Ústí n. L.",cat:"Stavebniny s půjčovnou",svc:["pronájem","prodej","cena"],sys:["komponentové"],price:"Stojka bednicí 200–360 cm od 9 Kč/den bez DPH",contact:"777 113 325 (Ústí n.L.)",note:"Řetězec s hustou sítí poboček a reálným skladem bednění v Ústí n.L. Výhoda dostupnosti."},
+  {n:"DEK Půjčovna",star:"",web:"https://www.dek.cz/pujcovna",region:"Celá ČR",city:"síť poboček",cat:"Stavebniny s půjčovnou",svc:["pronájem","cena"],sys:["komponentové"],price:"Sestava ~45 m² ≈ 24–29 Kč/m²/den, BEZ kauce",contact:"přes pobočky",note:"Horní hranice trhu cenou, ale bez kauce. Hustá síť, celostátní dostupnost."},
+  {n:"ME-Stavebniny (VISTR)",star:"",web:"https://www.me-stavebniny.cz",region:"Praha",city:"Praha 5 (sklad Lahovice)",cat:"Půjčovna stropního bednění",svc:["pronájem","cena"],sys:["Doka","PERI"],price:"Kompletní stropní systém 445 Kč/m²/měsíc (~12,3/den); stojky PERI 84–248 Kč; min. 20 m² + 350 Kč manip.",contact:"257 940 360 · info@vistr.cz",note:"Ceník po m²/měsíc. Komplet Doka + stojky PERI. Bez realizace."},
+
+  // ---- LOKÁLNÍ PŮJČOVNY ----
+  {n:"Půjčovna stropního bednění Novák",star:"⭐",web:"https://www.pujcovnastropnihobedneni.cz",region:"Praha",city:"Zličín, Praha 5",cat:"Specializovaná půjčovna",svc:["pronájem","prodej","cena"],sys:["komponentové"],price:"Stojky 2,50–6 Kč/ks/den; GT nosník 1; deska 5; T-PLEX 8 Kč/den. Manip. 50+50 Kč (nad 100 ks zdarma). Garance nejnižší ceny.",contact:"602 130 009 · roman.novak19@email.cz",note:"Jeden z nejsilnějších přímých konkurentů pro monolit. Veřejné kalkulace na m². Bonus: odbedňovací olej zdarma."},
+  {n:"Stavby Beznoska",star:"",web:"https://stavby-beznoska.cz",region:"Středočeský",city:"Smečno (Kladno)",cat:"Stavební firma + půjčovna",svc:["pronájem","realizace","cena"],sys:["PERI","Doka"],price:"Stojka 13/10/5; nosník H20 12/8/6; deska 13/10/5 Kč/ks/den (pásma 1–5/6–20/20+ dní); min. 2 000 Kč",contact:"607 841 996 · info@stavby-beznoska.cz",note:"Nejtransparentnější kusový ceník s pásmovými slevami a kaucemi. Dobrý benchmark."},
+  {n:"TEROM s.r.o. (Wendler)",star:"",web:"https://www.terom.cz",region:"Královéhradecký",city:"Chlumec nad Cidlinou",cat:"Půjčovna + zástupce Wendler",svc:["pronájem"],sys:["Wendler"],price:"na poptávku (projekt + doprava + zaškolení zdarma)",contact:"731 443 662 · bedneni.wendler@seznam.cz",note:"Jiná značka než Doka/PERI. Kapacita 1 000 m² stropního + 1 200 m² stěnového bednění. Silný pro vých. Čechy."},
+  {n:"GEMO a.s. — Půjčovna bednění",star:"",web:"https://bedneni.gemo.cz",region:"Olomoucký",city:"Hněvotín",cat:"Půjčovna velkého koncernu",svc:["pronájem","prodej"],sys:["Doka","PERI"],price:"kalkulace na den na poptávku",contact:"585 202 011 · gemo@gemo.cz",note:"Zázemí velkého generálního dodavatele; pronajímá Doka/PERI + lešení/BOZP. Silný pro Olomoucký kraj."},
+  {n:"QB Rent",star:"",web:"https://qbrent.cz",region:"Moravskoslezský",city:"Frýdek-Místek",cat:"Půjčovna strojů + bednění",svc:["pronájem","cena"],sys:["komponentové"],price:"Bednění stropu 18 Kč/m²/den",contact:"777 888 494 · info@qbrent.cz",note:"Jasná cena za m² — užitečný benchmark. Univerzální půjčovna (stroje, autodoprava), ne specialista."},
+  {n:"AUTOCOLOR Šoukal (LešeníAC)",star:"",web:"https://leseni.autocolor.cz",region:"Vysočina",city:"Velké Meziříčí + pobočky",cat:"Půjčovna + realizace monolitů",svc:["pronájem","realizace"],sys:["systémové"],price:"nabídky na míru, kalkulace zdarma",contact:"739 623 665 · bilek@autocolor.cz",note:"Silný hráč na Vysočině. Půjčovna + realizace ŽB monolitů na klíč + armování + statika. Široké pokrytí."},
+  {n:"Půjčák.cz (Tylcham Studios)",star:"",web:"https://www.pujcak.cz",region:"Moravskoslezský",city:"Ostrava",cat:"Půjčovna stavebního vybavení",svc:["pronájem","cena"],sys:["komponentové"],price:"Žabí svorka 0,36 Kč/den vč. DPH; stojky/kontejnery na webu. Bez minimální zakázky.",contact:"přes formulář",note:"Moderní web, malá lokální půjčovna pro drobné odběratele v Ostravě."},
+  {n:"OWN Půjčovna s.r.o.",star:"",web:"https://www.own-pujcovna.cz",region:"Moravskoslezský",city:"MSK",cat:"Stavebniny + půjčovna",svc:["pronájem","cena"],sys:["komponentové"],price:"Kompletní sestava od 12 Kč/m²/den bez DPH",contact:"přes web (online rezervace)",note:"Moderní model s online rezervací — inspirace pro nový web."},
+  {n:"stropyostrava.cz / stojky.cz",star:"",web:"https://stropyostrava.cz",region:"Moravskoslezský",city:"Václavovice (Ostravsko)",cat:"Půjčovna stojek + realizace",svc:["pronájem","realizace","cena"],sys:["komponentové"],price:"Bednění 13 Kč/m²/den; montáž 250 Kč/m² + odbednění 110 Kč/m²; doprava 8–20 tis. Kč",contact:"přes web",note:"Kombinace půjčovna stojek + realizace monolitických stropů. Veřejný ceník vč. montáže."},
+  {n:"Bedníme.cz",star:"",web:"https://bednime.cz",region:"Zlínský",city:"Valašsko",cat:"Půjčovna stropního/stěnového bednění",svc:["pronájem"],sys:[],price:"nezjištěno",contact:"přes web (ověřit telefonicky)",note:"Lokální specialista pro Valašsko (UH–Zlín–Olomouc–Ostrava). Web se nenačítal."},
+  {n:"FoxDen s.r.o.",star:"",web:"https://www.firmablizko.cz/121388-foxden",region:"Jihomoravský",city:"Brno – Starý Lískovec",cat:"Půjčovna bednění",svc:["pronájem"],sys:[],price:"nezjištěno",contact:"přes katalog",note:"Lokální brněnský hráč. Stěnové i stropní bednění, zaškolení zdarma. Cílí i na koncové zákazníky."},
+  {n:"Půjčovna Ladův kraj",star:"",web:"https://pujcovnaladuvkraj.cz",region:"Středočeský",city:"Říčany / Benešov",cat:"Půjčovna dodávek + bednění",svc:["pronájem"],sys:["komponentové"],price:"nezjištěno",contact:"přes web",note:"Stropní bednění + lešení + půjčovna dodávek. Široký dosah ze středních Čech (deklaruje i Ústecký kraj)."},
+  {n:"stavebni-podpery.cz (D. Klenc)",star:"",web:"https://www.stavebni-podpery.cz",region:"Plzeňský",city:"Nezdice (Plzeň-jih)",cat:"Půjčovna stropního bednění",svc:["pronájem"],sys:["komponentové"],price:"denní pronájem + vratná kauce (sazby nezjištěny)",contact:"přes web",note:"Lokální specialista pro Plzeňsko/Klatovsko. Stojky + nosníky H20."},
+  {n:"Půjčovna stavebních stojek (Jiřička)",star:"",web:"https://pujcovnastavebnichstojek.cz",region:"Středočeský",city:"Krhanice (Benešov)",cat:"Specializovaná půjčovna",svc:["pronájem"],sys:["PERI","Doka","Paschal"],price:"individuálně, bez minimální zakázky (i 1 stojka)",contact:"605 106 540 / 727 825 373",note:"Kompletní stropní bednění (monolit, MIAKO, XELLA). Bez minima — vhodné pro drobné stavebníky."},
+  {n:"JAPA Support",star:"",web:"https://japasupport.cz",region:"Jihočeský",city:"Cep / Jindřichův Hradec",cat:"Půjčovna bednění + lešení",svc:["pronájem"],sys:["PERI"],price:"nezjištěno",contact:"725 138 588",note:"Pronájem stropního bednění PERI + lešení v jižních Čechách."},
+  {n:"STAVEBNÍ FIRMA PLUS s.r.o.",star:"",web:"https://www.firmaplus.cz",region:"Ústecký",city:"Ústecký kraj",cat:"Stavební firma + půjčovna",svc:["pronájem","realizace","cena"],sys:[],price:"veřejný ceník (PDF); lešení od ~1 Kč/m²/den, bednění nezjištěno",contact:"přes web",note:"Kombinace stavební firma + půjčovna lešení a bednění."},
+  {n:"SVP půjčovna, s.r.o.",star:"",web:"https://www.svp.cz",region:"Celá ČR",city:"ČR",cat:"Půjčovna nářadí + stojky",svc:["pronájem"],sys:["komponentové"],price:"nezjištěno",contact:"přes web",note:"Spíš obecná půjčovna nářadí se stropními stojkami — okrajový konkurent."},
+
+  // ---- REALIZACE MONOLITŮ ----
+  {n:"NestService s.r.o.",star:"⭐⭐",web:"https://www.nestservice.cz",region:"Jihomoravský",city:"Brno",cat:"Půjčovna + realizace",svc:["pronájem","realizace"],sys:["Doka","PERI","MEVA"],price:"deklarují „nižší ceny než velké půjčovny”; projekt + statika zdarma",contact:"přes web",note:"Nejpřímější konkurent kombinovaného modelu (půjčovna + realizace menších monolitů) v celé ČR."},
+  {n:"Quart Construct s.r.o.",star:"⭐",web:"https://www.quart.cz",region:"Jihomoravský",city:"Pohořelice",cat:"Monolity + pronájem bednění",svc:["pronájem","realizace"],sys:["PERI","Paschal"],price:"nezjištěno",contact:"519 424 834 · info@quart.cz",note:"ŽB skelety + pronájem stropního bednění PERI/Paschal (~4 000 m²). Subdodavatel Strabag, Skanska, Metrostav."},
+  {n:"FERI s.r.o.",star:"⭐",web:"https://www.feri-hk.cz",region:"Královéhradecký",city:"Hradec Králové",cat:"Realizace + půjčovna + armovna",svc:["pronájem","realizace","prodej"],sys:["PERI"],price:"nezjištěno",contact:"723 404 970 · info@feri-hk.cz",note:"Samostatná divize půjčovna + čištění bednění + armovna. „Největší výrobce armatur v ČR.” Silný benchmark modelu."},
+  {n:"ServisStav RM s.r.o.",star:"",web:"https://www.servisstavrm.cz",region:"Středočeský",city:"Vavřinec (Kutná Hora)",cat:"Realizace + půjčovna",svc:["pronájem","realizace"],sys:["systémové"],price:"nezjištěno",contact:"775 228 496 · xrekonstrukce@seznam.cz",note:"Monolitické stropy a schodiště + aktivně inzeruje pronájem stropního bednění vč. montáže."},
+  {n:"PEVE Construct s.r.o.",star:"⭐",web:"https://www.peveconstruct.cz",region:"Praha",city:"Praha 4",cat:"Velký specialista monolitů",svc:["realizace"],sys:["PERI","ULMA","Doka"],price:"bednění nezjištěno; ceník techniky zveřejněn",contact:"776 383 300 · poptavky@peveconstruct.cz",note:"ŽB monolity + hrubá stavba na klíč. Statika in-house, pojištění 150 mil. Kč. Rozsáhlé portfolio."},
+  {n:"Eucon spol. s r.o.",star:"⭐",web:"https://eucon.cz",region:"Praha",city:"Praha",cat:"Velký etablovaný hráč",svc:["realizace"],sys:["Doka"],price:"nezjištěno",contact:"222 782 175 · info@eucon.cz",note:"Od 1991. 6 000+ m² stropního bednění. Reference Galerie Harfa, Palác Flora. Subdodavatel Metrostav/Skanska."},
+  {n:"BBA-MONOLIT s.r.o.",star:"",web:"https://www.bba-monolit.cz",region:"Středočeský",city:"Vestec / Praha 4",cat:"Velkoobjemové skelety",svc:["realizace"],sys:["PERI"],price:"nezjištěno",contact:"244 465 840 · mail@bba-monolit.cz",note:"Výhradně kompletní monolity (10–50 000+ m² bednění). Vlastní PERI ~4 000 m² + 2 jeřáby. Stavba roku Stř. kraje 2020."},
+  {n:"SDMstav s.r.o.",star:"",web:"https://monolit-sdm.com",region:"Praha",city:"Praha + Středočeský",cat:"Realizace monolitů",svc:["realizace"],sys:["vlastní"],price:"doprava zveřejněna (auto s rukou 40 Kč/km)",contact:"773 076 959 · sdmstav-praha@seznam.cz",note:"Kompletní ŽB monolity pro RD/bytové/komerční. Vlastní zásoby bednění."},
+  {n:"SOLIDUM monolitické konstrukce",star:"",web:"https://www.solidum-mk.cz",region:"Praha",city:"Praha 10",cat:"Realizace monolitů",svc:["realizace"],sys:[],price:"nezjištěno",contact:"732 644 642 · jan.piskora@solidum-mk.cz",note:"ŽB monolity na klíč v pozemním stavitelství, i v intravilánu."},
+  {n:"Monolity PN (Petr Němec)",star:"",web:"https://www.monolitypn.cz",region:"Praha",city:"Praha-Cholupice",cat:"Živnostník — monolity",svc:["realizace"],sys:["vlastní"],price:"nezjištěno",contact:"722 914 259",note:"Malý lokální hráč. Stropy, základy, opěrné stěny, schodiště, pohledový beton."},
+  {n:"ARDEM Stavební s.r.o.",star:"",web:"https://ardem.cz",region:"Praha",city:"Praha-Vinohrady",cat:"Stavební firma + monolity",svc:["realizace"],sys:[],price:"ceník na webu",contact:"773 514 459 · info@ardem.cz",note:"Monolitické práce jako jedna z mnoha služeb (zednické, SDK, fasády)."},
+  {n:"STAVBY Karpíšek s.r.o.",star:"",web:"https://www.stavbykarpisek.cz",region:"Středočeský",city:"Chotusice (Kutná Hora)",cat:"Monolity průmysl/zemědělství",svc:["realizace"],sys:["systémové"],price:"nezjištěno",contact:"777 276 979 · josefkarpisek@gmail.com",note:"ŽB pro průmysl a zemědělství — bílé vany, nádrže, stropy, skelety. Statika."},
+  {n:"ROCK SALT s.r.o.",star:"",web:"https://www.rocksalt.cz",region:"Liberecký",city:"Liberecko",cat:"Monolity + prefa",svc:["realizace"],sys:["PERI","Doka"],price:"nezjištěno",contact:"přes web",note:"ŽB monolity + vlastní prefa výroba + opláštění + lešení. Mezinárodní (DE/AT/SE/SK/UK)."},
+  {n:"FUTURE BAU s.r.o.",star:"",web:"https://www.futurebau.eu",region:"Karlovarský",city:"Cheb",cat:"Monolity na klíč",svc:["realizace"],sys:["Doka"],price:"nezjištěno",contact:"775 910 140 · podlipsky@futurebau.eu",note:"Regionální lídr pro Karlovarský kraj. Monolity + projekce + jeřábnické práce. Vlastní rámové Doka."},
+  {n:"euro-floor brtnice s.r.o.",star:"",web:"https://www.eurofloorbrtnice.cz",region:"Vysočina",city:"Brtnice",cat:"Monolity + vlastní betonárna",svc:["realizace"],sys:[],price:"nezjištěno",contact:"721 283 362 · info@eurofloorbrtnice.cz",note:"Monolity na klíč + průmyslové/lité podlahy. Vlastní betonárna, vývoj speciálních betonů."},
+  {n:"VSPN stavební s.r.o.",star:"",web:"https://www.vspn.cz",region:"Zlínský",city:"Zlín",cat:"Monolity + inženýrské stavby",svc:["realizace"],sys:[],price:"nezjištěno",contact:"776 300 403 · info@vspn.cz",note:"ŽB monolity (mosty, vodojemy, ČOV, stropy) + stavby na klíč. Pronajímá vlastní techniku."},
+  {n:"PLANER VM s.r.o.",star:"",web:"https://planer-vm.cz",region:"Praha",city:"Praha / celá ČR",cat:"Realizace monolitů",svc:["realizace"],sys:[],price:"nezjištěno",contact:"778 599 929",note:"ŽB/monolitické konstrukce, hlavně RD na klíč a rekonstrukce. Deklaruje pokrytí severu Čech."}
+];
+
+const REGIONS = ["Všechny kraje","Ústecký","Liberecký","Praha","Středočeský","Karlovarský","Plzeňský","Jihočeský","Vysočina","Královéhradecký","Pardubický","Jihomoravský","Olomoucký","Zlínský","Moravskoslezský","Celá ČR"];
+const SYSTEMS = ["Doka","PERI","ULMA","Paschal","MEVA","NOE","Hünnebeck","Wendler","RINGER","vlastní","komponentové","systémové"];
+const NORTH = ["Ústecký","Liberecký"];
+
+let activeSvc = new Set();
+let activeSys = new Set();
+
+const grid = document.getElementById('grid');
+const regionSel = document.getElementById('region');
+const sysChips = document.getElementById('sysChips');
+const search = document.getElementById('search');
+const sortSel = document.getElementById('sort');
+const countEl = document.getElementById('count');
+
+REGIONS.forEach(r=>{const o=document.createElement('option');o.value=r==="Všechny kraje"?"":r;o.textContent=r;regionSel.appendChild(o);});
+SYSTEMS.forEach(s=>{const c=document.createElement('span');c.className='fchip';c.dataset.sys=s;c.textContent=s;c.onclick=()=>{c.classList.toggle('active');if(activeSys.has(s))activeSys.delete(s);else activeSys.add(s);render();};sysChips.appendChild(c);});
+document.querySelectorAll('#svcChips .fchip').forEach(c=>{c.onclick=()=>{const v=c.dataset.svc;c.classList.toggle('active');if(activeSvc.has(v))activeSvc.delete(v);else activeSvc.add(v);render();};});
+
+// stats
+const stats=[
+  {b:DATA.length,s:"firem celkem"},
+  {b:DATA.filter(d=>NORTH.includes(d.region)).length,s:"na severu Čech"},
+  {b:DATA.filter(d=>d.svc.includes("pronájem")).length,s:"půjčoven bednění"},
+  {b:DATA.filter(d=>d.svc.includes("realizace")).length,s:"realizují monolity"},
+  {b:DATA.filter(d=>d.svc.includes("cena")).length,s:"veřejný ceník"}
+];
+document.getElementById('stats').innerHTML=stats.map(x=>`<div class="stat"><b>${x.b}</b><span>${x.s}</span></div>`).join('');
+
+regionSel.onchange=render; search.oninput=render; sortSel.onchange=render;
+
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function hl(s,q){if(!q)return esc(s);return esc(s).replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'),'<mark>$1</mark>');}
+
+function render(){
+  const q=search.value.trim();
+  const reg=regionSel.value;
+  let rows=DATA.filter(d=>{
+    if(reg && d.region!==reg) return false;
+    for(const s of activeSvc) if(!d.svc.includes(s)) return false;
+    if(activeSys.size){let ok=false;for(const s of activeSys) if(d.sys.includes(s)) ok=true; if(!ok) return false;}
+    if(q){const hay=(d.n+' '+d.city+' '+d.region+' '+d.cat+' '+d.sys.join(' ')+' '+d.note).toLowerCase();if(!hay.includes(q.toLowerCase()))return false;}
+    return true;
+  });
+  const sort=sortSel.value;
+  rows.sort((a,b)=>{
+    if(sort==='name') return a.n.localeCompare(b.n,'cs');
+    if(sort==='price'){const pa=a.svc.includes('cena')?0:1,pb=b.svc.includes('cena')?0:1;return pa-pb||a.n.localeCompare(b.n,'cs');}
+    // north first, then stars, then name
+    const na=NORTH.includes(a.region)?0:1, nb=NORTH.includes(b.region)?0:1;
+    if(na!==nb)return na-nb;
+    const sa=a.star?0:1, sb=b.star?0:1;
+    if(sa!==sb)return sa-sb;
+    return a.n.localeCompare(b.n,'cs');
+  });
+  countEl.textContent=`Zobrazeno ${rows.length} z ${DATA.length} firem`;
+  grid.innerHTML=rows.map(d=>{
+    const north=NORTH.includes(d.region);
+    const svcTags=d.svc.filter(s=>s!=='cena').map(s=>`<span class="tag svc">${s}</span>`).join('');
+    const sysTags=d.sys.map(s=>`<span class="tag sys">${s}</span>`).join('');
+    return `<div class="card ${north?'north':''}">
+      ${north?'<span class="badge">sever Čech</span>':(d.star?`<span class="badge" style="background:#1a2a3a;color:#9cc8ff;border-color:#2a4a6a">${d.star}</span>`:'')}
+      <h3>${hl(d.n,q)} ${d.star&&north?d.star:''}</h3>
+      <div class="region">📍 ${hl(d.city,q)} · <b>${d.region}</b> · ${esc(d.cat)}</div>
+      <div class="tags">${svcTags}${sysTags}</div>
+      ${d.price&&d.price!=='nezjištěno'?`<div class="price">💰 ${esc(d.price)}</div>`:''}
+      <div class="field"><b>Kontakt:</b> ${esc(d.contact)}</div>
+      <div class="note">${hl(d.note,q)}</div>
+      <a href="${d.web}" target="_blank" rel="noopener">${d.web.replace(/^https?:\/\//,'')}</a>
+    </div>`;
+  }).join('');
+}
+render();
+</script>
+</body>
+</html>
