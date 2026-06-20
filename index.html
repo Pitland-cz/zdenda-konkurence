@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Konkurence — půjčovna bednění & monolitické stropy (ČR)</title>
+<title>Půjčovna stropního bednění — sever Čech · projektový podklad</title>
 <style>
   :root{
     --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --line:#2a2f3a;
@@ -11,24 +11,32 @@
     --green:#37c172; --red:#ff6b6b; --chip:#262b35;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
-  header{padding:28px 22px 18px;background:linear-gradient(160deg,#1a1e27,#0f1115);border-bottom:1px solid var(--line)}
-  h1{margin:0 0 6px;font-size:24px}
-  header p{margin:0;color:var(--muted);font-size:14px;max-width:880px}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
+  header{padding:24px 22px 14px;background:linear-gradient(160deg,#1a1e27,#0f1115);border-bottom:1px solid var(--line)}
+  h1{margin:0 0 6px;font-size:22px}
+  header p{margin:0;color:var(--muted);font-size:13px;max-width:900px}
+  .tabs{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:4px;background:rgba(15,17,21,.97);backdrop-filter:blur(8px);padding:10px 22px;border-bottom:1px solid var(--line)}
+  .tab{padding:8px 16px;border-radius:8px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;user-select:none;border:1px solid transparent}
+  .tab:hover{color:var(--txt)}
+  .tab.active{background:var(--accent);color:#1a1a1a}
   .wrap{padding:18px 22px 60px;max-width:1300px;margin:0 auto}
+  section.page{display:none}
+  section.page.active{display:block}
   .stats{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}
   .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;min-width:140px}
   .stat b{display:block;font-size:22px}
   .stat span{color:var(--muted);font-size:12px}
   h2{font-size:18px;margin:30px 0 12px;border-left:3px solid var(--accent);padding-left:10px}
+  h3.sub{font-size:15px;color:var(--accent2);margin:20px 0 8px}
+  p.body{font-size:14px;max-width:900px}
   .bench{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
   .bcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
   .bcard h3{margin:0 0 8px;font-size:14px;color:var(--accent)}
   .bcard .big{font-size:20px;font-weight:700}
   .bcard small{color:var(--muted);display:block;margin-top:4px;font-size:12px}
-  .controls{position:sticky;top:0;z-index:5;background:rgba(15,17,21,.95);backdrop-filter:blur(6px);padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:16px}
+  .controls{position:sticky;top:52px;z-index:5;background:rgba(15,17,21,.95);backdrop-filter:blur(6px);padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:16px}
   .controls .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-  input[type=text],select{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+  input[type=text],input[type=number],select{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
   input[type=text]{flex:1;min-width:200px}
   .filterchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
   .fchip{background:var(--chip);border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;user-select:none}
@@ -51,24 +59,69 @@
   .note{font-size:12px;color:var(--muted);font-style:italic;border-top:1px solid var(--line);padding-top:8px;margin-top:2px}
   .card a{color:var(--accent2);text-decoration:none;font-size:12px}
   .card a:hover{text-decoration:underline}
-  .legend{color:var(--muted);font-size:12px;margin:8px 0 0}
   footer{color:var(--muted);font-size:12px;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}
   mark{background:var(--accent);color:#1a1a1a;border-radius:3px}
+  /* tables */
+  table.t{border-collapse:collapse;width:100%;max-width:980px;margin:10px 0;font-size:13px}
+  table.t th{background:#1f3a5f;color:#fff;text-align:left;padding:8px 10px;font-weight:600}
+  table.t td{border:1px solid var(--line);padding:7px 10px;vertical-align:top}
+  table.t tr:nth-child(even) td{background:#14171e}
+  /* pillars / lists */
+  ul.clean{max-width:920px;padding-left:0;list-style:none}
+  ul.clean li{position:relative;padding:8px 0 8px 26px;border-bottom:1px solid var(--line);font-size:14px}
+  ul.clean li:before{content:"▸";position:absolute;left:4px;color:var(--accent)}
+  ul.clean li b{color:var(--txt)}
+  .callout{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:14px 16px;margin:14px 0;max-width:920px;font-size:14px}
+  .callout.green{border-left-color:var(--green)}
+  /* calculator */
+  .calc{display:grid;grid-template-columns:340px 1fr;gap:18px;align-items:start}
+  @media(max-width:760px){.calc{grid-template-columns:1fr}}
+  .calcbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .calcbox h3{margin:0 0 12px;font-size:15px;color:var(--accent)}
+  .frow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;font-size:14px}
+  .frow label{color:var(--muted);flex:1}
+  .frow input[type=number]{width:110px;text-align:right}
+  .frow input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent)}
+  .res{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .res:last-child{border-bottom:none}
+  .res .v{font-weight:600}
+  .res.total{font-size:18px;color:var(--accent);font-weight:700;border-top:2px solid var(--accent);margin-top:6px;padding-top:12px}
+  .res.sub{color:var(--green)}
+  .doc{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden;max-width:980px}
+  .doc summary{cursor:pointer;padding:14px 16px;font-weight:600;font-size:15px;color:var(--accent2);list-style:none}
+  .doc summary::-webkit-details-marker{display:none}
+  .doc summary:before{content:"▸ ";color:var(--accent)}
+  .doc[open] summary:before{content:"▾ "}
+  .doc .inner{padding:0 18px 16px;font-size:13.5px}
+  .muted{color:var(--muted)}
+  .dlbar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 0}
+  .dl{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--accent2);text-decoration:none}
+  .dl:hover{border-color:var(--accent2)}
 </style>
 </head>
 <body>
 <header>
-  <h1>Konkurence: půjčovna bednění &amp; realizace monolitických stropů — ČR</h1>
-  <p>Celorepublikový přehled firem prozkoumaných přes jejich weby. Zaměřeno na potenciální konkurenci nové firmy (půjčovna monolitického stropního bednění + realizace stropů) se sídlem na <b>severu Čech / v Ústeckém kraji</b>. Filtruj podle kraje, typu služby a systému bednění. Data: červen 2026.</p>
+  <h1>Půjčovna stropního bednění &amp; realizace monolitických stropů — sever Čech</h1>
+  <p>Projektový podklad pro Zdeňka Potomského. Čtyři části: zmapovaná konkurence (59 firem), strategie a pozicování, ceník s živou kalkulačkou a vzorové obchodní dokumenty. Data: červen 2026.</p>
 </header>
+
+<nav class="tabs" id="tabs">
+  <div class="tab active" data-tab="konkurence">Konkurence (59 firem)</div>
+  <div class="tab" data-tab="strategie">Strategie &amp; pozicování</div>
+  <div class="tab" data-tab="cenik">Ceník &amp; kalkulačka</div>
+  <div class="tab" data-tab="dokumenty">Dokumenty</div>
+</nav>
+
 <div class="wrap">
 
+<!-- ============ KONKURENCE ============ -->
+<section class="page active" id="konkurence">
   <div class="stats" id="stats"></div>
 
-  <h2>Cenové benchmarky</h2>
+  <h2>Cenové benchmarky trhu</h2>
   <div class="bench">
     <div class="bcard"><h3>Půjčovné stropního bednění</h3><div class="big">12–18 Kč/m²/den</div><small>Typická sazba u regionálních půjčoven. DEK až 24–29 Kč/m²/den (bez kauce) = horní hranice.</small></div>
-    <div class="bcard"><h3>Realizace stropu „na klíč"</h3><div class="big">2 000–3 500 Kč/m²</div><small>Kompletní (bednění+výztuž+beton+práce). Složitější 3 500–5 500 Kč/m². Svépomocí ~730–1 000 Kč/m².</small></div>
+    <div class="bcard"><h3>Realizace stropu „na klíč“</h3><div class="big">2 000–3 500 Kč/m²</div><small>Kompletní (bednění+výztuž+beton+práce). Složitější 3 500–5 500 Kč/m². Svépomocí ~730–1 000 Kč/m².</small></div>
     <div class="bcard"><h3>Pořízení nové sady bednění</h3><div class="big">1 350–1 950 Kč/m²</div><small>Sada na 100 m² = cca 134–192 tis. Kč bez DPH. Návratnost při pronájmu ~1–2 sezóny.</small></div>
     <div class="bcard"><h3>Rozpad realizace (práce)</h3><div class="big">336 + 560 Kč/m²</div><small>Betonáž 336 Kč/m² + zřízení bednění 560 Kč/m² (s DPH). Beton od ~3 388 Kč/m³. Výztuž ~50 tis. Kč/t.</small></div>
   </div>
@@ -96,9 +149,221 @@
   <div class="grid" id="grid"></div>
 
   <footer>
-    <p>Rešerše sestavena z webových stránek firem, katalogů (Firmy.cz, Živéfirmy) a cenových portálů (Daibau, Epicentrum Home, Serwisbudowy). Ceny jsou orientační k červnu 2026; u firem bez veřejného ceníku se kalkuluje individuálně z projektu. ⭐ = klíčový hráč. Žlutý rámeček = sídlo/působnost na severu Čech.</p>
+    <p>Rešerše z webů firem, katalogů (Firmy.cz, Živéfirmy) a cenových portálů (Daibau, Epicentrum Home, Serwisbudowy). Ceny orientační k červnu 2026. ⭐ = klíčový hráč. Žlutý rámeček = sídlo/působnost na severu Čech.</p>
     <p><b>Hlavní závěr:</b> Žádný velký systémový hráč (Doka, PERI, ULMA, Paschal, MEVA, NOE, Hünnebeck) nemá v Ústeckém kraji vlastní depo. Lokální konkurence je řídká a netransparentní — jen FORMWORKCZ (Lenešice/Louny) zveřejňuje ceník stropního bednění. To je tržní mezera pro novou firmu.</p>
   </footer>
+</section>
+
+<!-- ============ STRATEGIE ============ -->
+<section class="page" id="strategie">
+  <h2>1. Shrnutí pro rozhodnutí</h2>
+  <p class="body">Rešerše 59 firem ukázala dvě využitelné mezery. <b>Za prvé:</b> žádný z velkých systémových dodavatelů bednění nemá v Ústeckém kraji vlastní sklad — region obsluhují z Prahy, Berouna nebo Brna (delší dojezd, dražší doprava). <b>Za druhé:</b> téměř nikdo v regionu nezveřejňuje ceník stropního bednění — jediná výjimka je FORMWORKCZ (Lenešice u Loun).</p>
+  <div class="callout green"><b>Doporučená pozice:</b> lokální <b>full-service půjčovna</b> stropního bednění na severu Čech, která kombinuje rychlou dostupnost, dopravu na stavbu, montáž i poradenství a navíc umí strop postavit na klíč. Tedy ne „suchá“ půjčovna komponentů, ale partner, který stavební firmě i drobnému staviteli sejme z ramen celou starost o strop. Transparentní ceník je marketingová zbraň, kterou konkurence v regionu nepoužívá.</div>
+
+  <h2>2. Trh a příležitost v regionu</h2>
+  <p class="body">V katalogu Firmy.cz je v kategorii pronájmu bednění pro Ústecký kraj vedena prakticky jediná specializovaná firma (FORMWORKCZ) a pro Liberecký kraj jedna (1ku1). Velcí hráči pokrývají region „na dálku“.</p>
+  <table class="t"><thead><tr><th>Firma</th><th>Sídlo</th><th>Čím je silná / slabá</th></tr></thead><tbody>
+    <tr><td>FORMWORKCZ</td><td>Lenešice (Louny)</td><td>Nejpřímější konkurent: půjčovna + realizace + veřejný ceník, doprava do 50 km zdarma. Laťka, kterou je nutné dorovnat nebo překonat servisem.</td></tr>
+    <tr><td>ELPA</td><td>Ústí nad Labem</td><td>Hlavně lešení; přidaná hodnota armovna a doprava. Stropní bednění je u nich doplněk — prostor předběhnout specializací.</td></tr>
+    <tr><td>Stavirezek</td><td>sklad HK, staví zde</td><td>Velké reference (nemocnice Děčín, Chomutov), park Doka. Míří na velké zakázky — nechává prostor v segmentu RD a menších staveb.</td></tr>
+    <tr><td>CON-WALL / VALME</td><td>Liberecko</td><td>Silní realizátoři monolitů, ale bednění nepronajímají — konkurují jen v realizaci.</td></tr>
+    <tr><td>Doka, PERI…</td><td>Praha / Brno</td><td>Bez depa v regionu = dojezd a doprava navíc. Konkurují cenou jen u velkých inženýrských staveb.</td></tr>
+  </tbody></table>
+
+  <h2>3. Cíloví zákazníci</h2>
+  <h3 class="sub">A) Malé a střední stavební firmy — primární</h3>
+  <ul class="clean">
+    <li><b>Kdo:</b> party a firmy, které berou hrubé stavby a stropy RD, menších bytových a komerčních objektů, bez vlastního velkého parku bednění.</li>
+    <li><b>Proč priorita:</b> opakovaný odběr, vědí co chtějí, citliví na rychlost a dostupnost, ne na nejnižší cenu.</li>
+    <li><b>Co je získá:</b> bednění skladem hned, doprava na stavbu, kladecí plán zdarma, dopůjčení při skluzu.</li>
+  </ul>
+  <h3 class="sub">B) Drobní stavitelé a svépomocné stavby RD — sekundární</h3>
+  <ul class="clean">
+    <li><b>Kdo:</b> lidé stavící vlastní dům, kteří chtějí monolitický strop a hledají, kde si půjčit bednění (a často i radu nebo partu).</li>
+    <li><b>Proč:</b> vyšší marže na kus, ochota platit za servis a jistotu, dobrý zdroj referencí.</li>
+    <li><b>Co je získá:</b> srozumitelný ceník, půjčení i malého množství, zaškolení, varianta „postavíme vám to“.</li>
+  </ul>
+  <h3 class="sub">C) Developeři a větší investoři — výhledově</h3>
+  <ul class="clean">
+    <li><b>Proč až později:</b> vyžadují větší park a reference — náběh po prvních úspěšných zakázkách.</li>
+  </ul>
+
+  <h2>4. Pozicování a odlišení</h2>
+  <div class="callout"><b>Positioning:</b> „Na severu Čech postavíme váš strop — nebo vám na něj půjčíme všechno potřebné. Bednění skladem, doprava na stavbu, montáž i kladecí plán. Bez objednávání z Prahy, s ceníkem, který vidíte předem.“</div>
+  <ul class="clean">
+    <li><b>1. Lokální dostupnost a rychlost</b> — sklad na severu Čech, dojezd v řádu desítek minut, ne hodin z Prahy.</li>
+    <li><b>2. Full-service místo suché půjčovny</b> — doprava, montáž a odbednění, poradenství a kladecí plán zdarma, realizace stropu na klíč.</li>
+    <li><b>3. Transparentní ceník</b> — veřejné sazby; konkurence v regionu (mimo FORMWORKCZ) ceny tají.</li>
+    <li><b>4. Jeden partner pro celý strop</b> — zákazník neshání zvlášť bednění, dopravu, partu a beton.</li>
+    <li><b>5. Férové podmínky</b> — půjčení i malého množství, jasné kauce, žádné skryté poplatky.</li>
+  </ul>
+
+  <h2>5. Čím a kolika m² začít</h2>
+  <p class="body">Z rešerše víme, jaké systémy konkurence používá a jak velké sklady drží:</p>
+  <table class="t"><thead><tr><th>Firma</th><th>Systém</th><th>Velikost parku bednění</th></tr></thead><tbody>
+    <tr><td>Eucon (Praha)</td><td>Doka</td><td>6 000+ m² stropního</td></tr>
+    <tr><td>BBA-MONOLIT</td><td>PERI Multiflex</td><td>~4 000 m² + 2 jeřáby</td></tr>
+    <tr><td>Quart Construct</td><td>PERI / Paschal</td><td>~4 000 m² (i pronájem)</td></tr>
+    <tr><td>TEROM</td><td>Wendler</td><td>1 000 m² strop + 1 200 m² stěny</td></tr>
+    <tr><td>CON-WALL</td><td>Doka</td><td>600 m² strop + 650 m² stěny</td></tr>
+    <tr><td>Novák (Praha)</td><td>komponentové</td><td>sady; 100 m² ≈ 70 stojek, 270 bm nosníku, 80 desek</td></tr>
+    <tr><td>DEK / ME-stavebniny</td><td>Doka + stojky PERI</td><td>sestavy od ~20–45 m²</td></tr>
+  </tbody></table>
+  <div class="callout"><b>Čtení:</b> PERI a Doka dominují u velkých realizátorů, ale pro půjčovní segment (RD a menší stavby) to <b>není podmínka</b>. Lokální půjčovny jedou levnější komponentové nosníkové bednění a jsou plně konkurenceschopné. Značka rozhoduje až u velkých inženýrských staveb.</div>
+  <ul class="clean">
+    <li><b>Typ:</b> komponentové nosníkové stropní bednění (stojky 250–400 cm, trojnožky, hlavy, nosníky H20/GT24, desky). Brand-agnostic.</li>
+    <li><b>Velikost:</b> start ~300–500 m². Strop RD má 80–150 m², pokryje to 2–4 menší zakázky souběžně. Rozšiřovat dle poptávky.</li>
+    <li><b>Doplňky k odlišení:</b> odbedňovací olej, vázací nářadí a vibrátor k zapůjčení, T-PLEX desky na pohledový beton.</li>
+  </ul>
+
+  <h2>6. Cenová politika</h2>
+  <ul class="clean">
+    <li><b>Půjčovné:</b> nasadit se na spodní–střední hranici trhu (konkurenceschopně vůči FORMWORKCZ), rozdíl dohánět <b>servisem, ne podbízením</b>. Pásmové slevy (1–5 / 6–20 / 20+ dní).</li>
+    <li><b>Realizace na klíč:</b> 2 000–3 500 Kč/m² dle náročnosti; jasně oddělit, co je v ceně. Vyšší marže + vytížení vlastního bednění.</li>
+    <li><b>Návratnost:</b> nová sada ~1 350–1 950 Kč/m²; při 12–18 Kč/m²/den se zaplatí reálně za 1–2 sezóny. Klíč = vytíženost (proto realizace pokrývá mezery).</li>
+  </ul>
+
+  <h2>7. První kroky</h2>
+  <ul class="clean">
+    <li><b>1. Identita a kontakt</b> — název, logo, zápis do Firmy.cz a Mapy.cz (v kraji skoro prázdno).</li>
+    <li><b>2. Web s ceníkem a poptávkou</b> — kalkulačka m² + formulář (lze hostit jako tento přehled).</li>
+    <li><b>3. Oslovení stavebních firem</b> — seznam firem v kraji + nabídkový list, přímý kontakt.</li>
+    <li><b>4. První reference</b> — i menší zakázka s fotkami; reference jsou hlavní měna.</li>
+    <li><b>5. Sezónnost</b> — kampaň načasovat na předjaří, ať je park vytížený od startu sezóny.</li>
+  </ul>
+</section>
+
+<!-- ============ CENÍK & KALKULAČKA ============ -->
+<section class="page" id="cenik">
+  <h2>Živá kalkulačka pronájmu</h2>
+  <p class="body muted">Pracovní sazby (bez DPH), nastavené konkurenceschopně vůči FORMWORKCZ. Uprav je podle reálných nákladů — výsledek se přepočítá hned.</p>
+  <div class="calc">
+    <div class="calcbox">
+      <h3>Zadání</h3>
+      <div class="frow"><label>Plocha stropu (m²)</label><input type="number" id="i_plocha" value="120" min="0"></div>
+      <div class="frow"><label>Počet dní pronájmu</label><input type="number" id="i_dny" value="30" min="1"></div>
+      <div class="frow"><label>Vzdálenost na stavbu (km)</label><input type="number" id="i_km" value="20" min="0"></div>
+      <div class="frow"><label>Doprava tam i zpět</label><input type="checkbox" id="i_doprava" checked></div>
+      <div class="frow"><label>Montáž + odbednění naší partou</label><input type="checkbox" id="i_montaz"></div>
+      <h3 style="margin-top:18px">Sazby (Kč, bez DPH)</h3>
+      <div class="frow"><label>Sestava 1–5 dní (Kč/m²/den)</label><input type="number" id="s1" value="14" step="0.5"></div>
+      <div class="frow"><label>Sestava 6–20 dní</label><input type="number" id="s2" value="11" step="0.5"></div>
+      <div class="frow"><label>Sestava 20+ dní</label><input type="number" id="s3" value="8" step="0.5"></div>
+      <div class="frow"><label>Doprava (Kč/km)</label><input type="number" id="s_km" value="30"></div>
+      <div class="frow"><label>Montáž+odbednění (Kč/m²)</label><input type="number" id="s_mont" value="360"></div>
+      <div class="frow"><label>Min. půjčovné (Kč)</label><input type="number" id="s_min" value="1500"></div>
+    </div>
+    <div>
+      <div class="calcbox">
+        <h3>Výpočet</h3>
+        <div class="res"><span>Denní sazba dle pásma</span><span class="v" id="r_sazba">–</span></div>
+        <div class="res"><span>Pronájem bednění</span><span class="v" id="r_pron">–</span></div>
+        <div class="res"><span>Doprava</span><span class="v" id="r_dopr">–</span></div>
+        <div class="res"><span>Montáž + odbednění</span><span class="v" id="r_mont">–</span></div>
+        <div class="res sub"><span>Mezisoučet bez DPH (min. hlídán)</span><span class="v" id="r_sub">–</span></div>
+        <div class="res"><span>DPH 21 %</span><span class="v" id="r_dph">–</span></div>
+        <div class="res total"><span>CELKEM s DPH</span><span class="v" id="r_total">–</span></div>
+      </div>
+      <div class="calcbox" style="margin-top:14px">
+        <h3>Odhad spotřeby bednění</h3>
+        <div class="res"><span>Stojky (~0,7/m²)</span><span class="v" id="sp_stojky">–</span></div>
+        <div class="res"><span>Trojnožky (~0,3/m²)</span><span class="v" id="sp_troj">–</span></div>
+        <div class="res"><span>Nosníky H20/GT24 (~2,7 bm/m²)</span><span class="v" id="sp_nos">–</span></div>
+        <div class="res"><span>Bednicí desky (~1,1 m²/m²)</span><span class="v" id="sp_desky">–</span></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">Orientační koeficienty (benchmark Novák ~100 m²). Uprav dle reálné sestavy a výšky podepření.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Ceník — komponenty (Kč/ks/den, bez DPH)</h2>
+  <table class="t"><thead><tr><th>Položka</th><th>Jednotka</th><th>1–5 dní</th><th>6–20 dní</th><th>20+ dní</th><th>Kauce/ks</th></tr></thead><tbody>
+    <tr><td>Stojka stropní 250 cm</td><td>ks</td><td>4</td><td>3</td><td>2,5</td><td>200</td></tr>
+    <tr><td>Stojka stropní 300 cm</td><td>ks</td><td>5</td><td>4</td><td>3</td><td>200</td></tr>
+    <tr><td>Stojka stropní 400 cm</td><td>ks</td><td>6</td><td>5</td><td>4</td><td>250</td></tr>
+    <tr><td>Stojka stropní 500 cm</td><td>ks</td><td>8</td><td>6</td><td>5</td><td>300</td></tr>
+    <tr><td>Trojnožka (stativ)</td><td>ks</td><td>3</td><td>2,5</td><td>2</td><td>150</td></tr>
+    <tr><td>Křížová hlava</td><td>ks</td><td>1</td><td>0,8</td><td>0,6</td><td>50</td></tr>
+    <tr><td>Přímá (spouštěcí) hlava</td><td>ks</td><td>0,8</td><td>0,6</td><td>0,5</td><td>50</td></tr>
+    <tr><td>Nosník H20 / GT24</td><td>bm</td><td>1</td><td>0,8</td><td>0,6</td><td>80</td></tr>
+    <tr><td>Bednicí deska (překližka)</td><td>m²</td><td>6</td><td>5</td><td>3,5</td><td>150</td></tr>
+    <tr><td>T-PLEX deska (pohledový beton)</td><td>m²</td><td>9</td><td>7</td><td>5</td><td>300</td></tr>
+  </tbody></table>
+
+  <h2>Doplňkové služby a podmínky</h2>
+  <table class="t"><thead><tr><th>Služba</th><th>Sazba</th><th>Pozn.</th></tr></thead><tbody>
+    <tr><td>Kompletní stropní bednění</td><td>8–14 Kč/m²/den</td><td>dle délky pronájmu</td></tr>
+    <tr><td>Doprava na stavbu (jednosměr)</td><td>30 Kč/km</td><td>do 50 km zdarma při zakázce nad 5 000 Kč</td></tr>
+    <tr><td>Montáž bednění</td><td>250 Kč/m²</td><td>postavení sestavy naší partou</td></tr>
+    <tr><td>Odbednění (demontáž)</td><td>110 Kč/m²</td><td>rozebrání a naložení</td></tr>
+    <tr><td>Poradenství + kladecí plán</td><td>zdarma</td><td>návrh sestavy z výkresu stropu</td></tr>
+    <tr><td>Minimální půjčovné</td><td>1 500 Kč</td><td>za jednu výpůjčku, bez DPH</td></tr>
+    <tr><td>Realizace stropu na klíč</td><td>2 000–3 500 Kč/m²</td><td>bednění + výztuž + betonáž, dle náročnosti</td></tr>
+  </tbody></table>
+  <p class="body muted">Všechny ceny bez DPH (plátce DPH 21 %). Pracovní návrh — finální sazby dolaď podle skutečných nákladů.</p>
+</section>
+
+<!-- ============ DOKUMENTY ============ -->
+<section class="page" id="dokumenty">
+  <h2>Vzorové obchodní dokumenty</h2>
+  <p class="body muted">Pole v [hranatých závorkách] doplň údaji firmy a zákazníka. Vzory jsou obecný pracovní podklad, ne právní rada — před ostrým použitím doporučujeme kontrolu právníkem.</p>
+  <div class="dlbar">
+    <a class="dl" href="Strategie-a-pozicovani.docx">⬇ Strategie (Word)</a>
+    <a class="dl" href="Cenik-a-kalkulacka.xlsx">⬇ Ceník + kalkulačka (Excel)</a>
+    <a class="dl" href="Smlouva-podminky-nabidka.docx">⬇ Smlouva + podmínky + nabídka (Word)</a>
+  </div>
+
+  <details class="doc" open><summary>1) Nabídkový list pro stavební firmy a investory</summary>
+    <div class="inner">
+      <p><b>[NÁZEV FIRMY]</b> — půjčovna stropního bednění a realizace monolitických stropů na severu Čech.</p>
+      <p><b>Co nabízíme:</b></p>
+      <ul class="clean">
+        <li><b>Pronájem stropního bednění skladem</b> — stojky, nosníky, desky; vyzvednutí i dovoz na stavbu.</li>
+        <li><b>Doprava na stavbu</b> — do 50 km zdarma při zakázce nad 5 000 Kč.</li>
+        <li><b>Montáž a odbednění</b> — postavíme i rozebereme vlastní partou.</li>
+        <li><b>Poradenství a kladecí plán zdarma</b> — navrhneme sestavu z výkresu vašeho stropu.</li>
+        <li><b>Realizace monolitického stropu na klíč</b> — bednění, výztuž, betonáž.</li>
+      </ul>
+      <p><b>Proč my:</b> jsme z regionu (rychlá dostupnost), transparentní ceník, jeden partner pro celý strop.</p>
+      <table class="t"><thead><tr><th>Služba</th><th>Sazba (bez DPH)</th><th>Pozn.</th></tr></thead><tbody>
+        <tr><td>Kompletní stropní bednění</td><td>od 8 Kč/m²/den</td><td>dle délky pronájmu</td></tr>
+        <tr><td>Doprava na stavbu</td><td>30 Kč/km</td><td>do 50 km zdarma*</td></tr>
+        <tr><td>Montáž + odbednění</td><td>od 360 Kč/m²</td><td>volitelně</td></tr>
+        <tr><td>Realizace stropu na klíč</td><td>2 000–3 500 Kč/m²</td><td>dle náročnosti</td></tr>
+        <tr><td>Kladecí plán + poradenství</td><td>zdarma</td><td></td></tr>
+      </tbody></table>
+      <p class="muted">*při zakázce nad 5 000 Kč. Konkrétní cenu spočítáme z výkresu stropu zdarma.</p>
+      <p><b>Kontakt:</b> [NÁZEV FIRMY] · IČO [______] · [adresa skladu] · tel. [______] · e-mail [______] · web [______]</p>
+    </div>
+  </details>
+
+  <details class="doc"><summary>2) Smlouva o nájmu stropního bednění</summary>
+    <div class="inner">
+      <p class="muted">uzavřená podle § 2201 a násl. zákona č. 89/2012 Sb., občanský zákoník</p>
+      <p><b>Pronajímatel:</b> [NÁZEV FIRMY], IČO [______], sídlo [______], zastoupený [______].<br>
+      <b>Nájemce:</b> [jméno / název], IČO / r.č. [______], [adresa], [telefon, e-mail].</p>
+      <p><b>I. Předmět nájmu</b><br>1. Pronajímatel přenechává nájemci do dočasného užívání stropní bednění a příslušenství dle výdejního protokolu (příloha smlouvy). 2. Protokol obsahuje druh, počet a stav položek při předání a je oběma stranami podepsán.</p>
+      <p><b>II. Doba nájmu</b><br>1. Nájem od [datum] na dobu [neurčitou / určitou do datum]. Pro účtování je rozhodující počet kalendářních dní od výdeje do vrácení včetně. 2. Vrácení nejpozději v den ukončení v provozní době pronajímatele.</p>
+      <p><b>III. Nájemné</b><br>1. Účtuje se dle platného ceníku za každý započatý den; sazby dle délky výpůjčky (1–5 / 6–20 / 20+ dní). 2. Minimální nájemné 1 500 Kč bez DPH. 3. K cenám se připočítává DPH. Splatnost [zálohově / do 14 dní]. 4. Doprava, montáž a odbednění dle ceníku, je-li sjednáno.</p>
+      <p><b>IV. Kauce</b><br>1. Vratná kauce dle ceníku, celkem [______] Kč. 2. Vrací se po vrácení kompletního a nepoškozeného předmětu; lze z ní uhradit dlužné nájemné, opravy, čištění či náhradu za chybějící kusy.</p>
+      <p><b>V. Povinnosti nájemce</b><br>1. Užívat jen k obvyklému účelu dle technických a bezpečnostních pokynů. 2. Chránit před poškozením, ztrátou a odcizením; nepřenechat třetí osobě bez souhlasu. 3. Vrátit čisté (zbavené betonu) v původním stavu s běžným opotřebením; za znečištění poplatek dle ceníku. 4. Uhradit náhradu za chybějící/zničené položky dle ceníku náhrad.</p>
+      <p><b>VI. Odpovědnost</b><br>1. Nájemce odpovídá za škodu od převzetí do vrácení. 2. Statickou a montážní bezpečnost na stavbě zajišťuje nájemce, nebyla-li sjednána montáž pronajímatelem.</p>
+      <p><b>VII. Závěrečná ujednání</b><br>1. Dvě vyhotovení, změny písemně. 2. Neupravené vztahy se řídí občanským zákoníkem a obchodními podmínkami pronajímatele.</p>
+      <p class="muted">V [____] dne [____] — podpis pronajímatele _____________ · podpis nájemce _____________</p>
+    </div>
+  </details>
+
+  <details class="doc"><summary>3) Obchodní podmínky půjčovny</summary>
+    <div class="inner">
+      <p><b>1. Výdej a vrácení</b> — v provozovně nebo dovoz/odvoz za poplatek; protokol s počtem a stavem kusů; nájemné běží do dne vrácení včetně.</p>
+      <p><b>2. Stav, čištění, opotřebení</b> — vrací se zbavené betonu; za čištění poplatek dle ceníku; běžné opotřebení nájemce nehradí, trvalé poškození ano.</p>
+      <p><b>3. Kauce a náhrady</b> — kauce vratná po bezvadném vrácení; ceník náhrad je přílohou smlouvy.</p>
+      <p><b>4. Odpovědnost a bezpečnost</b> — montáž a BOZP zajišťuje nájemce, není-li sjednána montáž; pronajímatel poskytne podklady a kladecí plán.</p>
+      <p><b>5. Platby</b> — ceny bez DPH; při prodlení úrok z prodlení a smluvní pokuta dle smlouvy.</p>
+      <p><b>6. Ochrana údajů</b> — osobní údaje zpracovány jen pro účely smlouvy v souladu s GDPR.</p>
+    </div>
+  </details>
+</section>
+
 </div>
 
 <script>
@@ -191,7 +456,6 @@ REGIONS.forEach(r=>{const o=document.createElement('option');o.value=r==="Všech
 SYSTEMS.forEach(s=>{const c=document.createElement('span');c.className='fchip';c.dataset.sys=s;c.textContent=s;c.onclick=()=>{c.classList.toggle('active');if(activeSys.has(s))activeSys.delete(s);else activeSys.add(s);render();};sysChips.appendChild(c);});
 document.querySelectorAll('#svcChips .fchip').forEach(c=>{c.onclick=()=>{const v=c.dataset.svc;c.classList.toggle('active');if(activeSvc.has(v))activeSvc.delete(v);else activeSvc.add(v);render();};});
 
-// stats
 const stats=[
   {b:DATA.length,s:"firem celkem"},
   {b:DATA.filter(d=>NORTH.includes(d.region)).length,s:"na severu Čech"},
@@ -220,7 +484,6 @@ function render(){
   rows.sort((a,b)=>{
     if(sort==='name') return a.n.localeCompare(b.n,'cs');
     if(sort==='price'){const pa=a.svc.includes('cena')?0:1,pb=b.svc.includes('cena')?0:1;return pa-pb||a.n.localeCompare(b.n,'cs');}
-    // north first, then stars, then name
     const na=NORTH.includes(a.region)?0:1, nb=NORTH.includes(b.region)?0:1;
     if(na!==nb)return na-nb;
     const sa=a.star?0:1, sb=b.star?0:1;
@@ -245,6 +508,47 @@ function render(){
   }).join('');
 }
 render();
+
+// ---- TABS ----
+document.querySelectorAll('#tabs .tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('section.page').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+    window.scrollTo(0,0);
+  };
+});
+
+// ---- KALKULAČKA ----
+const fmt=n=>new Intl.NumberFormat('cs-CZ',{maximumFractionDigits:0}).format(Math.round(n))+' Kč';
+const fmt1=n=>new Intl.NumberFormat('cs-CZ',{maximumFractionDigits:1}).format(n);
+function calc(){
+  const g=id=>parseFloat(document.getElementById(id).value)||0;
+  const plocha=g('i_plocha'), dny=g('i_dny'), km=g('i_km');
+  const doprava=document.getElementById('i_doprava').checked;
+  const montaz=document.getElementById('i_montaz').checked;
+  const s1=g('s1'), s2=g('s2'), s3=g('s3'), sKm=g('s_km'), sMont=g('s_mont'), sMin=g('s_min');
+  const sazba = dny<=5? s1 : (dny<=20? s2 : s3);
+  const pron = plocha*sazba*dny;
+  const dopr = (km<=50?0:km*sKm)*(doprava?2:1);
+  const mont = montaz? plocha*sMont : 0;
+  const sub = Math.max(pron+dopr+mont, sMin);
+  const dph = sub*0.21;
+  document.getElementById('r_sazba').textContent=fmt1(sazba)+' Kč/m²/den';
+  document.getElementById('r_pron').textContent=fmt(pron);
+  document.getElementById('r_dopr').textContent=fmt(dopr);
+  document.getElementById('r_mont').textContent=fmt(mont);
+  document.getElementById('r_sub').textContent=fmt(sub);
+  document.getElementById('r_dph').textContent=fmt(dph);
+  document.getElementById('r_total').textContent=fmt(sub+dph);
+  document.getElementById('sp_stojky').textContent=Math.round(plocha*0.7)+' ks';
+  document.getElementById('sp_troj').textContent=Math.round(plocha*0.3)+' ks';
+  document.getElementById('sp_nos').textContent=Math.round(plocha*2.7)+' bm';
+  document.getElementById('sp_desky').textContent=Math.round(plocha*1.1)+' m²';
+}
+document.querySelectorAll('#cenik input').forEach(i=>{i.oninput=calc;i.onchange=calc;});
+calc();
 </script>
 </body>
 </html>
